@@ -42,3 +42,21 @@ class ФайлJson(Абстрактный_Файл):
             self.записать(текущие_данные)
         except FileNotFoundError:
             self.записать(данные)
+
+class ФайлTxt(Абстрактный_Файл):
+    """Класс для работы с текстовыми файлами."""
+    
+    def __init__(self, путь_к_файлу: str):
+        self.путь_к_файлу = путь_к_файлу
+    
+    def читать(self) -> str:
+        with open(self.путь_к_файлу, 'r', encoding='utf-8') as файл:
+            return файл.read()
+    
+    def записать(self, данные: str) -> None:
+        with open(self.путь_к_файлу, 'w', encoding='utf-8') as файл:
+            файл.write(данные)
+    
+    def добавить(self, данные: str) -> None:
+        with open(self.путь_к_файлу, 'a', encoding='utf-8') as файл:
+            файл.write(данные)
