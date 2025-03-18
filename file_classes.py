@@ -2,6 +2,9 @@ from abc import ABC, abstractmethod
 from typing import Any
 import json
 from typing import Dict
+import csv
+from typing import List
+
 class Абстрактный_Файл(ABC):
     """Абстрактный базовый класс для операций с файлами."""
     
@@ -60,3 +63,25 @@ class ФайлTxt(Абстрактный_Файл):
     def добавить(self, данные: str) -> None:
         with open(self.путь_к_файлу, 'a', encoding='utf-8') as файл:
             файл.write(данные)
+
+
+class ФайлCsv(Абстрактный_Файл):
+    """Класс для работы с CSV файлами."""
+    
+    def __init__(self, путь_к_файлу: str):
+        self.путь_к_файлу = путь_к_файлу
+    
+    def читать(self) -> List[List]:
+        with open(self.путь_к_файлу, 'r', newline='', encoding='utf-8') as файл:
+            читатель = csv.reader(файл)
+            return list(читатель)
+    
+    def записать(self, данные: List[List]) -> None:
+        with open(self.путь_к_файлу, 'w', newline='', encoding='utf-8') as файл:
+            писатель = csv.writer(файл)
+            писатель.writerows(данные)
+    
+    def добавить(self, данные: List[List]) -> None:
+        with open(self.путь_к_файлу, 'a', newline='', encoding='utf-8') as файл:
+            писатель = csv.writer(файл)
+            писатель.writerows(данные)
